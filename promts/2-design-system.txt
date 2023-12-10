@@ -1,0 +1,31 @@
+Here are the components of the design
+
+1. Fonts
+
+Fonts used in the app would be Roboto and Roboto Mono. Roboto is used for the main text content and Roboto Mono is used for titles and subtitles. The font sizes are 16px for the main text and 24px for the titles and subtitles. The font weights are 400 for the main text and 500 for the titles and subtitles.
+
+---
+
+2. Colors
+
+Primary color: #FFC107
+Secondary color: #423e3c
+Background color: #EDEDED
+Link color: #2196F3
+
+---
+
+3. Buttons
+
+There are 3 types of buttons in the app
+
+1. Primary button - This is the main button that is used to perform the main action on the screen. This button is colored in the primary color of the app. The text on the button is white. The button has a border radius of 4px. The font used is Roboto with a font weight of 500 and a font size of 16px. The button has a box shadow of 0px 2px 4px rgba(0, 0, 0, 0.25).
+
+2. Secondary button - This button is used to perform secondary actions on the screen. This button is colored in the secondary color of the app. The text on the button is white. The button has a border radius of 4px. The font used is Roboto with a font weight of 500 and a font size of 16px. The button has a box shadow of 0px 2px 4px rgba(0, 0, 0, 0.25).
+
+3. Link button - This button is used to perform tertiary actions on the screen. This button is colored in the background color of the app. The text on the button is link color. The button has a border radius of 4px. The font used is Roboto with a font weight of 500 and a font size of 16px. The button has a box shadow of 0px 2px 4px rgba(0, 0, 0, 0.25).
+
+4. Icon button - This button is used to perform actions that are not the main action on the screen. This button is colored in the primary color and is round. The button has an icon instead of text and the icons are based on the material design icons. The color of the icon is white. The button has a box shadow of 0px 2px 4px rgba(0, 0, 0, 0.25).
+
+For the design system provided create components in react native. Use TouchableHighlight for buttons. Use the react-native-vector-icons package for icons.
+

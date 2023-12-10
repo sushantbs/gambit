@@ -1,0 +1,8 @@
+After the onboarding process, the user starts setting their goals.
+
+They should set at least 3 goals but it is not mandatory. The goals have a title which is limited to 140 characters. They should be encouraged to add a context to their goal. 
+They must also set some check points for this goal. The check point is when the user ranks whether the goal is on target, or not using a scale. The scale can be of different types based on the nature of the goal.
+
+The title of the goal once set, cannot be changed. The context and the checkpoints are editable as long as the goal is live. The goal is live from the time it is created till it is either marked is achieved or aborted.
+
+There can be some crowdsourced goals that can help people get started if they have less than 3 goals.

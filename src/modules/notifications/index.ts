@@ -1,0 +1,1 @@
+export {setupNotifeecations} from './notifications';
