@@ -2,7 +2,7 @@
 import React from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import {useGoalList} from '../modules/goals/useGoalList';
-import {SubtitleText} from '../components/Fonts';
+import {BodyText, SubtitleText} from '../components/Fonts';
 import {theme} from '../styles';
 
 interface GoalListProps {
@@ -11,9 +11,7 @@ interface GoalListProps {
 
 const GoalList: React.FC<GoalListProps> = ({navigation}) => {
   const goals = useGoalList();
-  console.log('Goals: ', goals);
   const goalArray = goals ? goals.map(([_id, goal]) => goal) : [];
-  // const goalArray = goalValues ? Array.from(goalValues) : [];
 
   return (
     <View style={theme.container}>
@@ -21,24 +19,45 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
         <FlatList
           data={goalArray}
           keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              style={styles.goalItem}
-              onPress={() => {
-                navigation.navigate('GoalDetail', {goal: item});
-              }}>
-              <Text style={styles.goalTitle}>{item.title}</Text>
-              <Text
-                style={
-                  styles.timer
-                }>{`Next checkpoint in: ${item.timeToNextCheckpoint}`}</Text>
-              <Text style={styles.score}>{`Score: ${item.score}`}</Text>
-              <Text
-                style={
-                  styles.suggestions
-                }>{`Suggestions: ${item.suggestions}`}</Text>
-            </TouchableOpacity>
-          )}
+          renderItem={({item}) => {
+            const {checkpoint} = item.checkins[0].default;
+            const {time} = checkpoint;
+            const nowDate = new Date();
+            const checkpointDate = new Date();
+            checkpointDate.setHours(time[0], time[1], 0, 0);
+            if (checkpointDate < nowDate) {
+              checkpointDate.setDate(checkpointDate.getDate() + 1);
+            }
+
+            const diff = checkpointDate.getTime() - nowDate.getTime();
+            const diffTime = new Date(diff);
+            const hours = diffTime.getHours();
+            const minutes = diffTime.getMinutes();
+
+            return (
+              <TouchableOpacity
+                style={styles.goalItem}
+                onPress={() => {
+                  navigation.navigate('GoalDetails', {goal: item});
+                }}>
+                <SubtitleText style={styles.goalTitle}>
+                  {item.title}
+                </SubtitleText>
+                <BodyText>{item.description}</BodyText>
+                <Text style={styles.score}>{`Score: ${item.healthScore}`}</Text>
+                <Text
+                  style={
+                    styles.timer
+                  }>{`Next checkpoint in: ${hours}:${minutes}`}</Text>
+                {item.suggestions.length ? (
+                  <Text
+                    style={
+                      styles.suggestions
+                    }>{`Suggestions: ${item.suggestions.join(', ')}`}</Text>
+                ) : null}
+              </TouchableOpacity>
+            );
+          }}
         />
       ) : (
         <SubtitleText>

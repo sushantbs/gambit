@@ -2,9 +2,14 @@ import {Dispatch, Middleware, configureStore} from '@reduxjs/toolkit';
 import {AppState, appStateReducer} from './reducers/appState';
 import {AppStateAction} from './actions/appState';
 import {getFromStorage, setInStorage} from '../modules/asyncStorage';
+import {createGoalReducer} from './reducers/createGoal';
+import {CreateGoalActions} from './actions/createGoal';
 
-type StoreAction = AppStateAction;
-type StoreState = {appState: AppState};
+type StoreAction = AppStateAction & CreateGoalActions;
+type StoreState = {
+  appState: AppState;
+  createGoal: ReturnType<typeof createGoalReducer>;
+};
 
 export const createStore = (initialState: AppState) => {
   return configureStore<
@@ -14,6 +19,7 @@ export const createStore = (initialState: AppState) => {
   >({
     reducer: {
       appState: appStateReducer,
+      createGoal: createGoalReducer,
     },
     preloadedState: {appState: initialState},
     middleware: getDefaultMiddleware => getDefaultMiddleware(),

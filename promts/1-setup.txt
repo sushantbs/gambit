@@ -2,9 +2,9 @@ This is an idea for a mobile app.
 
 The goal is to gamify building habits. There are goals that are set by the user. Periodically the user logs into their account on the app and updates how many goals they reached and which ones they have missed. This part of the user experience (UX from now) should be smooth and should employ a clean design and transitions to represent the moving pieces.
 
-There should be penalties for missing the periodic updates. The penalties will be monetary and can be one source of revenue. The penalty provided will be decided by the user and if they so choose they have the option of having no penalty but in that case there might be ads that are served.
+There may be penalties for missing the periodic updates. The penalties might be monetary and can be one source of revenue. The penalty provided will be decided by the user and if they so choose they have the option of having no penalty but in that case there might be ads that are served.
 
-There will be a (insert company) model that will analyse the goals and the updates provided daily responses will be provided here. The app should securely push this information to the app server whenever it is online. If it is not online this information should be collected and stored in the apps disk storage. Once they have been received by the server the storage should be cleaned up. This information is sensitive and should be secured appropriately.
+There will be a (insert LLM service) model that will analyse the goals and the updates provided daily responses will be provided here. The app should securely push this information to the app server whenever it is online. If it is not online this information should be collected and stored in the apps disk storage. Once they have been received by the server the storage should be cleaned up. This information is sensitive and should be secured appropriately.
 
 The model after analysis of the goals and its success rate will provide recommendations to tweak the goals. The model's AI should be trained in counselling people struggling to meet their goals and help them identify and breakdown the barriers stoping them from achieving their goals. These recommendations can range from changes in the frequency of updates for a goal, to chaning the goal itself in later iterations.
 

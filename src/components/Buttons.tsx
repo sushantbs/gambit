@@ -78,7 +78,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
 
 interface RadioButtonProps {
   label: string;
-  value: string;
+  value: any;
   checked: boolean;
   onPress: (value: string) => void;
 }
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    minWidth: 120,
   },
   buttonText: {
     color: 'white',

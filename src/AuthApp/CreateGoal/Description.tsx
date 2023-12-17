@@ -2,28 +2,32 @@ import React, {useState} from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
 import {PrimaryButton} from '../../components/Buttons';
 import {useDispatch} from 'react-redux';
-import {setGoalTitle} from '../../store/actions/createGoal';
+import {setGoalDescription} from '../../store/actions/createGoal';
 import {SubtitleText} from '../../components/Fonts';
 
-const Title: React.FC<{navigation: any}> = ({navigation}) => {
-  const [title, setTitle] = useState('');
+const Description: React.FC<{navigation: any}> = ({navigation}) => {
+  const [description, setDescription] = useState('');
   const dispatch = useDispatch();
+
   const handleNextClick = () => {
-    dispatch(setGoalTitle(title));
-    navigation.navigate('Description');
+    dispatch(setGoalDescription(description));
+    navigation.navigate('Measure');
   };
 
   return (
     <View style={styles.container}>
-      <SubtitleText style={styles.label}>Title</SubtitleText>
+      <SubtitleText style={styles.label}>Description</SubtitleText>
       <TextInput
-        style={styles.textInput}
-        value={title}
-        onChangeText={setTitle}
-        maxLength={140}
+        style={styles.textArea}
+        value={description}
+        onChangeText={setDescription}
+        multiline={true}
+        numberOfLines={4} // Adjust the number of lines
       />
       <View style={styles.buttonContainer}>
-        {title && <PrimaryButton title="Next" onPress={handleNextClick} />}
+        {description && (
+          <PrimaryButton title="Next" onPress={handleNextClick} />
+        )}
       </View>
     </View>
   );
@@ -39,13 +43,14 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 16,
   },
-  textInput: {
+  textArea: {
     alignSelf: 'stretch',
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 4,
     padding: 8,
-    fontSize: 24,
+    height: 100,
+    fontSize: 18,
   },
   buttonContainer: {
     position: 'absolute',
@@ -55,4 +60,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Title;
+export default Description;

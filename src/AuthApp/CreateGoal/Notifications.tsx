@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Button, StyleSheet, Text} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-const Checkpoints: React.FC = ({navigation}) => {
+const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
   const [notificationEnabled, setNotificationEnabled] = useState(false);
   const [notificationTime, setNotificationTime] = useState(new Date()); // Initialize with current time
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
