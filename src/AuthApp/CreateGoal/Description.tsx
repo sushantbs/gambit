@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
+import {View, TextInput, StyleSheet, ScrollView} from 'react-native';
 import {PrimaryButton} from '../../components/Buttons';
 import {useDispatch} from 'react-redux';
 import {setGoalDescription} from '../../store/actions/createGoal';
@@ -15,7 +15,7 @@ const Description: React.FC<{navigation: any}> = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <SubtitleText style={styles.label}>Description</SubtitleText>
       <TextInput
         style={styles.textArea}
@@ -29,14 +29,14 @@ const Description: React.FC<{navigation: any}> = ({navigation}) => {
           <PrimaryButton title="Next" onPress={handleNextClick} />
         )}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingHorizontal: 16,
   },

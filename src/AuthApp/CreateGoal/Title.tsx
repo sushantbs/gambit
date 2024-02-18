@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
+import {View, TextInput, StyleSheet, ScrollView} from 'react-native';
 import {PrimaryButton} from '../../components/Buttons';
 import {useDispatch} from 'react-redux';
 import {setGoalTitle} from '../../store/actions/createGoal';
@@ -14,7 +14,7 @@ const Title: React.FC<{navigation: any}> = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <SubtitleText style={styles.label}>Title</SubtitleText>
       <TextInput
         style={styles.textInput}
@@ -25,7 +25,7 @@ const Title: React.FC<{navigation: any}> = ({navigation}) => {
       <View style={styles.buttonContainer}>
         {title && <PrimaryButton title="Next" onPress={handleNextClick} />}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

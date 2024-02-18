@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {PrimaryButton, RadioButton} from '../../components/Buttons';
-import {CheckpointFrequency} from '../../store/reducers/createGoal';
+
 import DatePicker from '@react-native-community/datetimepicker';
 import {SubtitleText} from '../../components/Fonts';
 import {completeGoalCreation} from '../../store/actions/createGoal';
@@ -9,6 +9,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {GoalsContext} from '../../modules/goals/GoalsContext';
 import {RootState} from '../../store';
 import uuid from 'react-native-uuid';
+import {createNotificationsForNewGoal} from '../../modules/notifications/notifications';
+import {CheckpointFrequency} from '../../modules/goals/types';
 
 const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
   const [checkpointInterval, setCheckpointInterval] =
@@ -26,18 +28,38 @@ const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
   };
 
   const handleNextClick = async () => {
+    const createdTime = new Date().getTime();
+    const id = uuid.v4().toString();
+    const checkpointInfo = {
+      frequency: checkpointInterval,
+      time: [selectedTime.getHours(), selectedTime.getMinutes()] as [
+        number,
+        number,
+      ],
+    };
+
+    const scheduledNotifications = await createNotificationsForNewGoal(
+      checkpointInfo,
+      id,
+      createGoal.title,
+    );
+
     await goalsApi.createGoal({
-      id: uuid.v4().toString(),
+      id,
       title: createGoal.title,
       description: createGoal.description,
-      checkins: [
-        {
-          default: {
-            label: 'default',
+      createdOn: createdTime,
+      updatedOn: createdTime,
+      scheduledNotifications,
+      measurements: [],
+      checkinStructure: [
+        [
+          'default',
+          {
             measurementType: createGoal.measurementType,
-            checkpoint: createGoal.checkpoint,
+            checkpointInfo,
           },
-        },
+        ],
       ],
       healthScore: 0,
       suggestions: [],

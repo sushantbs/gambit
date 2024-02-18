@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {PrimaryButton, RadioButton} from '../../components/Buttons';
 import {useDispatch} from 'react-redux';
-import {MeasurementType} from '../../store/reducers/createGoal';
 import {setGoalMeasurementType} from '../../store/actions/createGoal';
 import {SubtitleText} from '../../components/Fonts';
+import {MeasurementType} from '../../modules/goals/types';
 
 const Measure: React.FC<{navigation: any}> = ({navigation}) => {
   const [measuringProgress, setMeasuringProgress] = useState<MeasurementType>(

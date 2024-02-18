@@ -1,6 +1,6 @@
 import {useEffect, useContext, useState} from 'react';
 import {GoalsContext} from './GoalsContext';
-import {Goal} from '../asyncStorage/asyncStorage';
+import {Goal} from './types';
 
 export const useGoalList = () => {
   const {instance: goalsApi} = useContext(GoalsContext);

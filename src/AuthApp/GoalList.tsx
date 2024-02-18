@@ -1,9 +1,10 @@
 // GoalList.tsx
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import {useGoalList} from '../modules/goals/useGoalList';
 import {BodyText, SubtitleText} from '../components/Fonts';
 import {theme} from '../styles';
+import {NotificationContext} from '../modules/notifications/context';
 
 interface GoalListProps {
   navigation: any; // You can use the actual navigation type
@@ -13,6 +14,13 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
   const goals = useGoalList();
   const goalArray = goals ? goals.map(([_id, goal]) => goal) : [];
 
+  const {notification} = useContext(NotificationContext);
+  useEffect(() => {
+    if (notification?.data?.type === 'update-goal') {
+      navigation.push('UpdateCheckpoint');
+    }
+  }, [notification, navigation]);
+
   return (
     <View style={theme.container}>
       {goalArray.length ? (
@@ -20,11 +28,11 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
           data={goalArray}
           keyExtractor={item => item.id}
           renderItem={({item}) => {
-            const {checkpoint} = item.checkins[0].default;
-            const {time} = checkpoint;
+            const {timestamp} = item.scheduledNotifications[0];
+
             const nowDate = new Date();
-            const checkpointDate = new Date();
-            checkpointDate.setHours(time[0], time[1], 0, 0);
+            const checkpointDate = new Date(timestamp);
+
             if (checkpointDate < nowDate) {
               checkpointDate.setDate(checkpointDate.getDate() + 1);
             }

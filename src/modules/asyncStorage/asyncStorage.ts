@@ -1,33 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AppState} from '../../store/reducers/appState';
 import {BackgroundNotification} from '../notifications/notifications';
-import {
-  CheckpointFrequency,
-  MeasurementType,
-} from '../../store/reducers/createGoal';
+import {Goal} from '../goals/types';
 
 type User = {
   name: string;
   email: string;
   id: string;
-};
-
-export type Goal = {
-  id: string;
-  title: string;
-  description: string;
-  checkins: {
-    [key: string]: {
-      label: string;
-      measurementType: MeasurementType;
-      checkpoint: {
-        frequency: CheckpointFrequency;
-        time: [number, number];
-      };
-    };
-  }[];
-  healthScore: number;
-  suggestions: string[];
 };
 
 type StorageValue = {

@@ -14,24 +14,32 @@ import {NotificationProvider} from '../modules/notifications/context';
 import {useBackgroundNotifications} from '../modules/notifications/useBackgroundNotifications';
 import {GoalsProvider} from '../modules/goals/GoalsProvider';
 import {GoalsApi} from '../modules/goals/GoalsApi';
+import {UpdateCheckpoint} from './UpdateCheckpoint';
 
 const Stack = createStackNavigator();
+
+const getInitialRouteName = (onboardingState: OnboardingState) => {
+  if (onboardingState === OnboardingState.NotStarted) {
+    return 'Onboarding';
+  }
+
+  return 'GoalList';
+};
 
 const AppStack = () => {
   const onboardingState = useSelector(
     ({appState}: RootState) => appState.onboardingState,
   );
 
-  const initialNotification = useInitialNotification();
   const backgroundNotification = useBackgroundNotifications();
 
   useEffect(() => {
-    console.log('initial notification: ', initialNotification);
     console.log('background notification: ', backgroundNotification);
-  }, [initialNotification, backgroundNotification]);
+  }, [backgroundNotification]);
 
-  const initialRouteName =
-    onboardingState === OnboardingState.NotStarted ? 'Onboarding' : 'GoalList';
+  const initialRouteName = getInitialRouteName(onboardingState);
+  // const initialRouteName = 'CreateGoal';
+  console.log(initialRouteName);
 
   return (
     <Stack.Navigator initialRouteName={initialRouteName}>
@@ -55,7 +63,11 @@ const AppStack = () => {
         component={CreateGoal}
         options={{headerShown: false}}
       />
-
+      <Stack.Screen
+        name="UpdateCheckpoint"
+        component={UpdateCheckpoint}
+        options={{headerShown: false}}
+      />
       {/* Add other screens as needed */}
     </Stack.Navigator>
   );

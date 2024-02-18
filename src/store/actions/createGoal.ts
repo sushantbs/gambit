@@ -1,4 +1,4 @@
-import {CheckpointFrequency, MeasurementType} from '../reducers/createGoal';
+import {CheckpointFrequency, MeasurementType} from '../../modules/goals/types';
 
 export const SET_GOAL_TITLE = 'SET_GOAL_TITLE';
 export const SET_GOAL_DESCRIPTION = 'SET_GOAL_DESCRIPTION';

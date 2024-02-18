@@ -1,17 +1,18 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {PrimaryButton, LinkButton} from '../../components/Buttons'; // Import your button components
-import {requestNotifications} from 'react-native-permissions';
 
 import {BodyText, SubtitleText} from '../../components/Fonts';
 import {theme} from '../../styles';
+import {requestNotificationPermission} from '../../modules/notifications/notifications';
+import {AuthorizationStatus} from '@notifee/react-native';
 
 export const NotificationsScreen: React.FC<{navigation: any}> = ({
   navigation,
 }) => {
   const handleEnableNotifications = async () => {
-    const result = await requestNotifications(['alert', 'sound']);
-    if (result.status === 'granted') {
+    const result = await requestNotificationPermission();
+    if (result.authorizationStatus === AuthorizationStatus.AUTHORIZED) {
       navigation.navigate('Velocity');
     }
   };

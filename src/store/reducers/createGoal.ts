@@ -6,34 +6,33 @@ import {
   SET_GOAL_DESCRIPTION,
   SET_GOAL_TITLE,
 } from '../actions/createGoal';
+import {
+  Checkpoint,
+  CheckpointFrequency,
+  MeasurementType,
+} from '../../modules/goals/types';
 
-export enum MeasurementType {
-  Boolean,
-  Scale,
-  NotSet,
-}
+export type CreateGoalState = {
+  title: string;
+  description: string;
+  measurementType: MeasurementType;
+  checkpoint: Checkpoint;
+};
 
-export enum CheckpointFrequency {
-  Daily,
-  Weekly,
-  Monthly,
-  NotSet,
-}
-
-const initialState = {
+const initialState: CreateGoalState = {
   title: '',
   description: '',
   measurementType: MeasurementType.NotSet,
   checkpoint: {
     frequency: CheckpointFrequency.NotSet,
-    time: [0, 0] as [number, number],
+    time: [0, 0],
   },
 };
 
-export const createGoalReducer: Reducer<
-  typeof initialState,
-  CreateGoalActions
-> = (state = initialState, action: CreateGoalActions): typeof initialState => {
+export const createGoalReducer: Reducer<CreateGoalState, CreateGoalActions> = (
+  state = initialState,
+  action: CreateGoalActions,
+): typeof initialState => {
   switch (action.type) {
     case SET_GOAL_TITLE:
       return {

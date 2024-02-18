@@ -76,19 +76,19 @@ export const IconButton: React.FC<IconButtonProps> = ({
   </TouchableHighlight>
 );
 
-interface RadioButtonProps {
+interface RadioButtonProps<T = string> {
   label: string;
   value: any;
   checked: boolean;
-  onPress: (value: string) => void;
+  onPress: (value: T) => void;
 }
 
-export const RadioButton: React.FC<RadioButtonProps> = ({
+export const RadioButton = <T,>({
   label,
   value,
   checked,
   onPress,
-}) => (
+}: RadioButtonProps<T>) => (
   <TouchableOpacity
     style={styles.radioContainer}
     onPress={() => onPress(value)}>
