@@ -15,7 +15,9 @@ const Description: React.FC<{navigation: any}> = ({navigation}) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      automaticallyAdjustKeyboardInsets
+      contentContainerStyle={styles.container}>
       <SubtitleText style={styles.label}>Description</SubtitleText>
       <TextInput
         style={styles.textArea}
@@ -36,7 +38,7 @@ const Description: React.FC<{navigation: any}> = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'flex-start',
     paddingHorizontal: 16,
   },

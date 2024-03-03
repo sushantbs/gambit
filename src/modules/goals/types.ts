@@ -1,3 +1,6 @@
+import {Monthday} from '../../components/MonthdayPicker';
+import {Weekday} from '../../components/WeekdayPicker';
+
 export type ScheduledNotification = {
   id: string;
   timestamp: number;
@@ -32,7 +35,9 @@ export enum CheckpointFrequency {
 
 export type Checkpoint = {
   frequency: CheckpointFrequency;
-  time: [number, number];
+  days: Weekday[] | Monthday[] | undefined;
+  hours: number;
+  minutes: number;
 };
 
 type GoalSuggestion = {
@@ -72,10 +77,7 @@ export type Goal = {
     string,
     {
       measurementType: MeasurementType;
-      checkpointInfo: {
-        frequency: CheckpointFrequency;
-        time: [number, number];
-      };
+      checkpointInfo: Checkpoint;
     },
   ][];
   healthScore: number;

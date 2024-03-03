@@ -6,6 +6,14 @@ export const theme = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  topAligned: {
+    justifyContent: 'flex-start',
+  },
+  topLeftAligned: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
   title: {
     fontSize: 48, // Font size for title
     fontWeight: '500', // Font weight for title

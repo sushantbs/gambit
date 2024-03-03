@@ -14,7 +14,9 @@ const Title: React.FC<{navigation: any}> = ({navigation}) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      automaticallyAdjustKeyboardInsets
+      contentContainerStyle={styles.container}>
       <SubtitleText style={styles.label}>Title</SubtitleText>
       <TextInput
         style={styles.textInput}

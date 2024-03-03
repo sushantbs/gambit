@@ -46,7 +46,7 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
               <TouchableOpacity
                 style={styles.goalItem}
                 onPress={() => {
-                  navigation.navigate('GoalDetails', {goal: item});
+                  navigation.navigate('GoalDetails', {goalId: item.id});
                 }}>
                 <SubtitleText style={styles.goalTitle}>
                   {item.title}

@@ -1,15 +1,21 @@
 The first thing a user sees when they open the app after a fresh install is the onboarding view.
 
-Using the stack navigator from the @react-navigation/stack package, this first step is implemented as a set of screens that let the user specify how they intend to use the app.
+Using the stack navigator from the `@react-navigation/stack` package, this first step is implemented as a set of screens that let the user specify how they intend to use the app.
 
-Let us build the first screen added to the stack navigator. This screen is called the Welcome screen.
+The first screen is called the Welcome screen.
 
 This screen shows a message that welcomes the user, and includes a reaffirming message about how building deliberate habits is the first step in having more control in their lives. There should be animations that animate using the beizer curve to make the screen seem dynamic. There is a centered button shown in the lower half of the screen that says "Get Started". This button is the only interactive element on the screen. When the user clicks on this button, the next screen is shown.
 
 ---
 
-The seconds screen is the Velocity screen. This screen shows a message that tells the user that the app will help them build habits that will help them achieve their goals but the user is in charge of the pace at which they want to build habits. Building habits usually take time and building habits faster requires a greater commitment from their side. The screen finally given the user 3 options to choose from. The options are "Slow (review progress at least once a week)", "Medium (review progress at least twice a week)", and "Fast (review progress daily)". The user can choose one of these options and click on the "Next" button to go to the next screen.
+The next screen is the Notifications screen. This screen shows a message that acknowledges that notifications can sometimes be disruptive so we want to make sure that the user is in control of when they receive notifications. The user can choose to receive notifications using the primary button or not receive notifications shown using the link button. If they choose to receive notifications then an OS prompt is shown to the user asking them to allow notifications from the app. If the user chooses to not receive notifications then the primary button on the screen is labelled "Done" and on clicking it the Onboarding flow ends and the user goes to the screen to create their first goal. If they choose to receive notifications, then the primary label button becomes "Next" and takes the user to the next screen.
 
 ---
 
-The final screen is the Notifications screen. This screen shows a message that acknowledges that notifications can sometimes be disruptive so we want to make sure that the user is in control of when they receive notifications. The user can choose to receive notifications using the primary button or not receive notifications shown using the link button. If they choose to receive notifications then an OS prompt is shown to the user asking them to allow notifications from the app. After the choose the option they want, they can click on the "Next" button to go to the next screen.
+The next screen is the Velocity screen. This screen shows a message that tells the user that the app will help them build habits that will help them achieve their goals but the user is in charge of the pace at which they want to build habits. Building habits usually take time and building habits faster requires a greater commitment from them. The screen finally gives the user 3 options to choose from. The options are "Slow (review progress at least once a week)", "Medium (review progress at least twice a week)", and "Fast (review progress daily)". The user can choose one of these options and click on the "Next" button to go to the next screen.
+
+---
+
+The next screen is where the user chooses when they would like to review the progress they've made about their goals and this will depend on the option they've chosen to 
+
+The final screen is the Complete
