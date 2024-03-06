@@ -1,7 +1,7 @@
 // GoalCreationFlow.tsx
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import Title from './Title'; // Import the components for each step
+import Title from './TitleDescription'; // Import the components for each step
 import Description from './Description';
 import Measure from './Measure';
 import Checkpoints from './Checkpoints';

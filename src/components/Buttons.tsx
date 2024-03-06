@@ -15,16 +15,22 @@ interface ButtonProps {
   onPress: () => void;
   buttonStyle?: ViewStyle;
   textStyle?: TextStyle;
+  fullLength?: boolean;
 }
 
 export const PrimaryButton: React.FC<ButtonProps> = ({
   title,
   onPress,
+  fullLength,
   buttonStyle,
   textStyle,
 }) => (
   <TouchableHighlight
-    style={[styles.primaryButton, buttonStyle]}
+    style={[
+      styles.primaryButton,
+      buttonStyle,
+      fullLength ? styles.fullLength : undefined,
+    ]}
     underlayColor="#FFCA28" // Slightly lighter/darker primary color
     onPress={onPress}>
     <Text style={[styles.buttonText, textStyle]}>{title}</Text>
@@ -81,6 +87,7 @@ interface RadioButtonProps<T = string> {
   value: any;
   checked: boolean;
   onPress: (value: T) => void;
+  textStyle?: Record<string, any>;
 }
 
 export const RadioButton = <T,>({
@@ -88,6 +95,7 @@ export const RadioButton = <T,>({
   value,
   checked,
   onPress,
+  textStyle,
 }: RadioButtonProps<T>) => (
   <TouchableOpacity
     style={styles.radioContainer}
@@ -95,13 +103,13 @@ export const RadioButton = <T,>({
     <View style={[styles.outerCircle, checked && styles.outerCircleSelected]}>
       {checked && <View style={styles.innerCircle} />}
     </View>
-    <Text style={styles.label}>{label}</Text>
+    <Text style={[styles.label, textStyle]}>{label}</Text>
   </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
   primaryButton: {
-    backgroundColor: '#FFC107',
+    backgroundColor: '#8ACB00',
     padding: 10,
     borderRadius: 4,
     shadowColor: '#000',
@@ -112,11 +120,11 @@ const styles = StyleSheet.create({
     minWidth: 120,
   },
   buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '500',
+    color: '#2E4300',
+    fontSize: 20,
+    fontWeight: '700',
     textAlign: 'center',
-    fontFamily: 'Roboto',
+    fontFamily: 'Inter',
   },
   secondaryButton: {
     backgroundColor: '#423e3c',
@@ -179,5 +187,13 @@ const styles = StyleSheet.create({
   },
   label: {
     marginLeft: 10,
+  },
+  fullLength: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 60,
+    width: '100%',
+    borderRadius: 30,
   },
 });

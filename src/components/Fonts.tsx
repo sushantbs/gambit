@@ -17,6 +17,16 @@ export const SubtitleText: React.FC<TextProps> = ({
   </Text>
 );
 
+export const ItemHeading: React.FC<TextProps> = ({
+  children,
+  style,
+  ...props
+}) => (
+  <Text style={[styles.itemHeading, style]} {...props}>
+    {children}
+  </Text>
+);
+
 export const BodyText: React.FC<TextProps> = ({children, style, ...props}) => (
   <Text style={[styles.body, style]} {...props}>
     {children}
@@ -25,18 +35,23 @@ export const BodyText: React.FC<TextProps> = ({children, style, ...props}) => (
 
 const styles = StyleSheet.create({
   title: {
-    fontFamily: 'Roboto Mono',
+    fontFamily: 'Inter',
     fontSize: 48,
     fontWeight: '500',
   },
   subtitle: {
-    fontFamily: 'Roboto Mono',
+    fontFamily: 'Inter',
     fontSize: 24,
     fontWeight: '500',
   },
   body: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Inter',
     fontSize: 16,
     fontWeight: '400',
+  },
+  itemHeading: {
+    fontSize: 16,
+    fontWeight: '500',
+    fontFamily: 'Inter',
   },
 });

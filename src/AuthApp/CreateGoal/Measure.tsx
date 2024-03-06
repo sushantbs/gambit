@@ -3,8 +3,9 @@ import {View, StyleSheet} from 'react-native';
 import {PrimaryButton, RadioButton} from '../../components/Buttons';
 import {useDispatch} from 'react-redux';
 import {setGoalMeasurementType} from '../../store/actions/createGoal';
-import {SubtitleText} from '../../components/Fonts';
+import {ItemHeading, SubtitleText} from '../../components/Fonts';
 import {MeasurementType} from '../../modules/goals/types';
+import {theme} from '../../styles';
 
 const Measure: React.FC<{navigation: any}> = ({navigation}) => {
   const [measuringProgress, setMeasuringProgress] = useState<MeasurementType>(
@@ -18,27 +19,33 @@ const Measure: React.FC<{navigation: any}> = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
-      <SubtitleText style={styles.label}>
+    <View style={[styles.container, theme.topAligned]}>
+      <ItemHeading style={styles.sectionHeading}>
         How do you want to measure progress?
-      </SubtitleText>
+      </ItemHeading>
       <View style={styles.radioButtonContainer}>
         <RadioButton
+          textStyle={styles.buttonStyle}
           onPress={() => setMeasuringProgress(MeasurementType.Boolean)}
           checked={measuringProgress === MeasurementType.Boolean}
-          label="Yes / No"
+          label="A simple Yes or No"
           value={MeasurementType.Boolean}
         />
         <RadioButton
+          textStyle={styles.buttonStyle}
           onPress={() => setMeasuringProgress(MeasurementType.Scale)}
           checked={measuringProgress === MeasurementType.Scale}
-          label="Scale 1-5"
+          label="On a scale of 1 to 5"
           value={MeasurementType.Scale}
         />
       </View>
       <View style={styles.buttonContainer}>
         {measuringProgress !== MeasurementType.NotSet && (
-          <PrimaryButton title="Next" onPress={handleNextClick} />
+          <PrimaryButton
+            fullLength
+            title="Continue"
+            onPress={handleNextClick}
+          />
         )}
       </View>
     </View>
@@ -51,9 +58,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     paddingHorizontal: 16,
+    paddingTop: 32,
   },
-  label: {
-    marginBottom: 16,
+  sectionHeading: {
+    marginBottom: 8,
   },
   radioButtonContainer: {
     flexDirection: 'column',
@@ -64,6 +72,10 @@ const styles = StyleSheet.create({
     bottom: 80,
     alignSelf: 'center',
     justifyContent: 'center',
+    width: '100%',
+  },
+  buttonStyle: {
+    fontSize: 24,
   },
 });
 

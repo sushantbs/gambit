@@ -32,4 +32,7 @@ export const theme = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  darkBg: {
+    backgroundColor: '#17141B',
+  },
 });

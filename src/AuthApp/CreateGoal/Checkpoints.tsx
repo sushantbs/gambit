@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {PrimaryButton, RadioButton} from '../../components/Buttons';
 
 import DatePicker from '@react-native-community/datetimepicker';
-import {SubtitleText} from '../../components/Fonts';
+import {ItemHeading, SubtitleText} from '../../components/Fonts';
 import {completeGoalCreation} from '../../store/actions/createGoal';
 import {useDispatch, useSelector} from 'react-redux';
 import {GoalsContext} from '../../modules/goals/GoalsContext';
@@ -88,7 +88,9 @@ const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <SubtitleText>How often do you want to check in?</SubtitleText>
+      <ItemHeading style={styles.sectionHeading}>
+        How often do you want to check in?
+      </ItemHeading>
       <View style={styles.radioButtonContainer}>
         <RadioButton
           label="Daily"
@@ -109,9 +111,9 @@ const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
           onPress={setCheckpointInterval}
         />
       </View>
-      <SubtitleText style={styles.checkinTitle}>
+      <ItemHeading style={styles.checkinTitle}>
         Choose a time to check in
-      </SubtitleText>
+      </ItemHeading>
       <View style={styles.timeSelectionContainer}>
         <DatePicker
           value={selectedTime}
@@ -134,7 +136,7 @@ const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
       )}
       {checkpointInterval === CheckpointFrequency.Monthly && (
         <View>
-          <SubtitleText style={styles.checkinTitle}>
+          <SubtitleText style={styles.sectionHeading}>
             Select a day of the month:
           </SubtitleText>
           <MonthdayPicker
@@ -159,14 +161,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingHorizontal: 16,
+    paddingTop: 32,
   },
-  label: {
-    fontSize: 16,
+  sectionHeading: {
     marginBottom: 8,
-  },
-  checkinTitle: {
-    marginTop: 16,
-    marginBottom: 16,
   },
   radioButtonContainer: {
     flexDirection: 'column',

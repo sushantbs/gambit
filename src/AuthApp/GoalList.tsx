@@ -5,6 +5,7 @@ import {useGoalList} from '../modules/goals/useGoalList';
 import {BodyText, SubtitleText} from '../components/Fonts';
 import {theme} from '../styles';
 import {NotificationContext} from '../modules/notifications/context';
+import {PrimaryButton} from '../components/Buttons';
 
 interface GoalListProps {
   navigation: any; // You can use the actual navigation type
@@ -22,9 +23,10 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
   }, [notification, navigation]);
 
   return (
-    <View style={theme.container}>
+    <View style={[theme.container, theme.darkBg, theme.topAligned]}>
       {goalArray.length ? (
         <FlatList
+          style={styles.listContainer}
           data={goalArray}
           keyExtractor={item => item.id}
           renderItem={({item}) => {
@@ -51,18 +53,25 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
                 <SubtitleText style={styles.goalTitle}>
                   {item.title}
                 </SubtitleText>
-                <BodyText>{item.description}</BodyText>
-                <Text style={styles.score}>{`Score: ${item.healthScore}`}</Text>
-                <Text
-                  style={
-                    styles.timer
-                  }>{`Next checkpoint in: ${hours}:${minutes}`}</Text>
-                {item.suggestions.length ? (
-                  <Text
-                    style={
-                      styles.suggestions
-                    }>{`Suggestions: ${item.suggestions.join(', ')}`}</Text>
-                ) : null}
+                <BodyText style={styles.description}>
+                  {item.description}
+                </BodyText>
+                <View style={styles.goalInformation}>
+                  <View style={styles.infoItem}>
+                    <Text style={styles.description}>Score: </Text>
+                    <Text style={styles.score}>{item.healthScore}</Text>
+                  </View>
+                  <View style={styles.infoItem}>
+                    <Text style={styles.description}>Next checkpoint in: </Text>
+                    <Text style={styles.score}>{`${hours}:${minutes}`}</Text>
+                  </View>
+                  {item.suggestions.length ? (
+                    <Text
+                      style={
+                        styles.suggestions
+                      }>{`Suggestions: ${item.suggestions.join(', ')}`}</Text>
+                  ) : null}
+                </View>
               </TouchableOpacity>
             );
           }}
@@ -73,26 +82,38 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
           Goal" button.
         </SubtitleText>
       )}
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => {
-          navigation.navigate('CreateGoal', {});
-        }}>
-        <Text style={styles.addButtonText}>Create Goal</Text>
-      </TouchableOpacity>
+      <View style={styles.addButtonContainer}>
+        <PrimaryButton
+          fullLength
+          title="Create a Goal"
+          onPress={() => {
+            navigation.navigate('CreateGoal', {});
+          }}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  listContainer: {
+    width: '100%',
+    paddingHorizontal: 32,
+  },
   goalItem: {
     padding: 16,
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
+    borderBottomWidth: 2,
+    borderColor: '#0E0C10',
+    width: '100%',
   },
   goalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 32,
+    fontWeight: '900',
+    fontFamily: 'Intex',
+    color: '#FFFFFF',
+  },
+  description: {
+    color: 'gray',
   },
   timer: {
     color: 'gray',
@@ -103,20 +124,23 @@ const styles = StyleSheet.create({
   suggestions: {
     color: 'blue',
   },
-  addButton: {
+  goalInformation: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  infoItem: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  addButtonContainer: {
+    display: 'flex',
     position: 'absolute',
     bottom: 32,
+    left: 32,
     right: 32,
-    borderRadius: 4,
-    backgroundColor: '#007AFF',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-  },
-  addButtonText: {
-    fontSize: 16,
-    color: 'white',
   },
 });
 
