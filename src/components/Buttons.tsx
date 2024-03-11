@@ -40,14 +40,21 @@ export const PrimaryButton: React.FC<ButtonProps> = ({
 export const SecondaryButton: React.FC<ButtonProps> = ({
   title,
   onPress,
+  fullLength,
   buttonStyle,
   textStyle,
 }) => (
   <TouchableHighlight
-    style={[styles.secondaryButton, buttonStyle]}
+    style={[
+      styles.secondaryButton,
+      buttonStyle,
+      fullLength ? styles.fullLength : undefined,
+    ]}
     underlayColor="#6b6866" // Slightly lighter/darker secondary color
     onPress={onPress}>
-    <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+    <Text style={[styles.buttonText, styles.secondaryButtonText, textStyle]}>
+      {title}
+    </Text>
   </TouchableHighlight>
 );
 
@@ -130,11 +137,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#423e3c',
     padding: 10,
     borderRadius: 4,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    borderColor: '#CCCCCC',
+    borderWidth: 2,
     elevation: 5,
+  },
+  secondaryButtonText: {
+    color: '#CCCCCC',
   },
   linkButton: {
     backgroundColor: '#EDEDED',

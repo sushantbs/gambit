@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {theme} from '../styles';
 import {BodyText, SubtitleText, TitleText} from '../components/Fonts';
 import {useGoal} from '../modules/goals/useGoal';
@@ -36,26 +36,40 @@ export const YesNoVisualization: React.FC<{
   data: {timestamp: number; value: YesNoValue}[];
 }> = ({data}) => {
   return (
-    <View style={{...theme.container, ...theme.topLeftAligned}}>
+    <View style={[theme.container, theme.topLeftAligned]}>
       {data.map(({timestamp, value}) => {
-        const backgroundColor = value === YesNoValue.Yes ? 'green' : 'red';
+        const backgroundColor =
+          value === YesNoValue.Yes ? yesNoStyles.green : yesNoStyles.red;
         return (
-          <View
-            style={{
-              width: 40,
-              height: 40,
-              backgroundColor,
-              borderRadius: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text style={{color: 'white'}}>{formatDateDDMM(timestamp)}</Text>
+          <View style={[yesNoStyles.container, backgroundColor]}>
+            <Text style={yesNoStyles.dateLabel}>
+              {formatDateDDMM(timestamp)}
+            </Text>
           </View>
         );
       })}
     </View>
   );
 };
+
+const yesNoStyles = StyleSheet.create({
+  container: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  red: {
+    backgroundColor: 'red',
+  },
+  green: {
+    backgroundColor: 'green',
+  },
+  dateLabel: {
+    color: 'white',
+  },
+});
 
 export const GoalDetails: React.FC<{route: any; navigation: any}> = ({
   route,

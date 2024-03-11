@@ -15,6 +15,7 @@ import {useBackgroundNotifications} from '../modules/notifications/useBackground
 import {GoalsProvider} from '../modules/goals/GoalsProvider';
 import {GoalsApi} from '../modules/goals/GoalsApi';
 import {UpdateCheckpoint} from './UpdateCheckpoint';
+import {CreationComplete} from './CreationComplete';
 
 const Stack = createStackNavigator();
 
@@ -66,6 +67,11 @@ const AppStack = () => {
       <Stack.Screen
         name="UpdateCheckpoint"
         component={UpdateCheckpoint}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="CreationComplete"
+        component={CreationComplete}
         options={{headerShown: false}}
       />
       {/* Add other screens as needed */}

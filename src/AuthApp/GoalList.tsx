@@ -2,7 +2,7 @@
 import React, {useContext, useEffect} from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import {useGoalList} from '../modules/goals/useGoalList';
-import {BodyText, SubtitleText} from '../components/Fonts';
+import {BodyText, SubtitleText, TitleText} from '../components/Fonts';
 import {theme} from '../styles';
 import {NotificationContext} from '../modules/notifications/context';
 import {PrimaryButton} from '../components/Buttons';
@@ -23,7 +23,7 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
   }, [notification, navigation]);
 
   return (
-    <View style={[theme.container, theme.darkBg, theme.topAligned]}>
+    <View style={[theme.container, theme.darkBg]}>
       {goalArray.length ? (
         <FlatList
           style={styles.listContainer}
@@ -53,17 +53,18 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
                 <SubtitleText style={styles.goalTitle}>
                   {item.title}
                 </SubtitleText>
-                <BodyText style={styles.description}>
+                <BodyText style={styles.goalDescription}>
                   {item.description}
                 </BodyText>
                 <View style={styles.goalInformation}>
                   <View style={styles.infoItem}>
-                    <Text style={styles.description}>Score: </Text>
-                    <Text style={styles.score}>{item.healthScore}</Text>
+                    <Text style={styles.infoLabel}>Score: </Text>
+                    <Text style={styles.infoValue}>{item.healthScore}</Text>
                   </View>
                   <View style={styles.infoItem}>
-                    <Text style={styles.description}>Next checkpoint in: </Text>
-                    <Text style={styles.score}>{`${hours}:${minutes}`}</Text>
+                    <Text style={styles.infoLabel}>Next checkpoint in: </Text>
+                    <Text
+                      style={styles.infoValue}>{`${hours}:${minutes}`}</Text>
                   </View>
                   {item.suggestions.length ? (
                     <Text
@@ -77,10 +78,13 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
           }}
         />
       ) : (
-        <SubtitleText>
-          You do not have any active goals. Create one by clicking the "Create
-          Goal" button.
-        </SubtitleText>
+        <>
+          <TitleText style={styles.fontStyles}>Congratulations!</TitleText>
+          <BodyText style={styles.fontStyles}>
+            You have successfully setup your habit building rhythm. You can now
+            proceed to create some habit goals.
+          </BodyText>
+        </>
       )}
       <View style={styles.addButtonContainer}>
         <PrimaryButton
@@ -98,7 +102,6 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
 const styles = StyleSheet.create({
   listContainer: {
     width: '100%',
-    paddingHorizontal: 32,
   },
   goalItem: {
     padding: 16,
@@ -112,14 +115,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Intex',
     color: '#FFFFFF',
   },
-  description: {
-    color: 'gray',
+  fontStyles: {
+    color: '#ffffff',
+    paddingHorizontal: 30,
+    marginBottom: 8,
+  },
+  goalDescription: {
+    color: '#FFFFFF',
+    marginTop: 8,
   },
   timer: {
     color: 'gray',
-  },
-  score: {
-    color: 'green',
   },
   suggestions: {
     color: 'blue',
@@ -128,10 +134,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: 8,
   },
   infoItem: {
     flex: 1,
     flexDirection: 'row',
+    flexGrow: 1,
+  },
+  infoLabel: {
+    color: '#ccc',
+  },
+  infoValue: {
+    color: 'green',
   },
   addButtonContainer: {
     display: 'flex',

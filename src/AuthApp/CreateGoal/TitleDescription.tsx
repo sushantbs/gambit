@@ -19,7 +19,7 @@ const Title: React.FC<{navigation: any}> = ({navigation}) => {
   return (
     <ScrollView
       automaticallyAdjustKeyboardInsets
-      contentContainerStyle={[styles.container, theme.topAligned]}>
+      contentContainerStyle={[theme.container, theme.topAligned]}>
       <View style={styles.textContainer}>
         <ItemHeading style={styles.sectionName}>Title</ItemHeading>
         <TextInput
@@ -28,15 +28,15 @@ const Title: React.FC<{navigation: any}> = ({navigation}) => {
           onChangeText={setTitle}
           maxLength={140}
         />
+        <ItemHeading style={styles.sectionName}>Description</ItemHeading>
+        <TextInput
+          style={styles.textArea}
+          value={description}
+          onChangeText={setDescription}
+          multiline={true}
+          numberOfLines={4} // Adjust the number of lines
+        />
       </View>
-      <ItemHeading style={styles.sectionName}>Description</ItemHeading>
-      <TextInput
-        style={styles.textArea}
-        value={description}
-        onChangeText={setDescription}
-        multiline={true}
-        numberOfLines={4} // Adjust the number of lines
-      />
       <View style={styles.buttonContainer}>
         {title && (
           <PrimaryButton
@@ -51,12 +51,6 @@ const Title: React.FC<{navigation: any}> = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    paddingHorizontal: 32,
-  },
   sectionName: {
     marginBottom: 8,
   },

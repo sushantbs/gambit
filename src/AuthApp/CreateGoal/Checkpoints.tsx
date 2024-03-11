@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {PrimaryButton, RadioButton} from '../../components/Buttons';
 
 import DatePicker from '@react-native-community/datetimepicker';
-import {ItemHeading, SubtitleText} from '../../components/Fonts';
+import {ItemHeading} from '../../components/Fonts';
 import {completeGoalCreation} from '../../store/actions/createGoal';
 import {useDispatch, useSelector} from 'react-redux';
 import {GoalsContext} from '../../modules/goals/GoalsContext';
@@ -83,7 +83,7 @@ const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
     });
 
     dispatch(completeGoalCreation());
-    navigation.navigate('Complete');
+    navigation.navigate('CreationComplete');
   };
 
   return (
@@ -93,25 +93,28 @@ const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
       </ItemHeading>
       <View style={styles.radioButtonContainer}>
         <RadioButton
+          textStyle={styles.radioOptionText}
           label="Daily"
           value={CheckpointFrequency.Daily}
           checked={checkpointInterval === CheckpointFrequency.Daily}
           onPress={setCheckpointInterval}
         />
         <RadioButton
+          textStyle={styles.radioOptionText}
           label="Weekly"
           value={CheckpointFrequency.Weekly}
           checked={checkpointInterval === CheckpointFrequency.Weekly}
           onPress={setCheckpointInterval}
         />
         <RadioButton
+          textStyle={styles.radioOptionText}
           label="Monthly"
           value={CheckpointFrequency.Monthly}
           checked={checkpointInterval === CheckpointFrequency.Monthly}
           onPress={setCheckpointInterval}
         />
       </View>
-      <ItemHeading style={styles.checkinTitle}>
+      <ItemHeading style={styles.sectionHeading}>
         Choose a time to check in
       </ItemHeading>
       <View style={styles.timeSelectionContainer}>
@@ -124,9 +127,9 @@ const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
       </View>
       {checkpointInterval === CheckpointFrequency.Weekly && (
         <View>
-          <SubtitleText style={styles.checkinTitle}>
+          <ItemHeading style={styles.sectionHeading}>
             Select a day of the week:
-          </SubtitleText>
+          </ItemHeading>
           <WeekdayPicker
             multiselect
             values={selectedDaysOfWeek}
@@ -136,9 +139,9 @@ const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
       )}
       {checkpointInterval === CheckpointFrequency.Monthly && (
         <View>
-          <SubtitleText style={styles.sectionHeading}>
+          <ItemHeading style={styles.sectionHeading}>
             Select a day of the month:
-          </SubtitleText>
+          </ItemHeading>
           <MonthdayPicker
             multiselect
             values={selectedDaysOfMonth}
@@ -148,7 +151,11 @@ const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
       )}
       <View style={styles.buttonContainer}>
         {checkpointInterval !== CheckpointFrequency.NotSet && (
-          <PrimaryButton title="Next" onPress={handleNextClick} />
+          <PrimaryButton
+            fullLength
+            title="Continue"
+            onPress={handleNextClick}
+          />
         )}
       </View>
     </View>
@@ -161,14 +168,17 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingHorizontal: 16,
-    paddingTop: 32,
   },
   sectionHeading: {
+    marginTop: 32,
     marginBottom: 8,
   },
   radioButtonContainer: {
     flexDirection: 'column',
     alignItems: 'flex-start',
+  },
+  radioOptionText: {
+    fontSize: 24,
   },
   timeSelectionContainer: {
     flexDirection: 'row',
@@ -176,6 +186,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
+    width: '100%',
     bottom: 40,
     alignSelf: 'center',
     justifyContent: 'center',

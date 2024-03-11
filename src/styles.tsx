@@ -5,12 +5,12 @@ export const theme = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 30,
   },
   topAligned: {
     justifyContent: 'flex-start',
   },
   topLeftAligned: {
-    flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
@@ -34,5 +34,6 @@ export const theme = StyleSheet.create({
   },
   darkBg: {
     backgroundColor: '#17141B',
+    color: '#fff',
   },
 });

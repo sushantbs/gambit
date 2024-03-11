@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {PrimaryButton, RadioButton} from '../../components/Buttons';
 import {useDispatch} from 'react-redux';
 import {setGoalMeasurementType} from '../../store/actions/createGoal';
-import {ItemHeading, SubtitleText} from '../../components/Fonts';
+import {ItemHeading} from '../../components/Fonts';
 import {MeasurementType} from '../../modules/goals/types';
 import {theme} from '../../styles';
 
@@ -19,21 +19,21 @@ const Measure: React.FC<{navigation: any}> = ({navigation}) => {
   };
 
   return (
-    <View style={[styles.container, theme.topAligned]}>
+    <View style={[styles.container, theme.container, theme.topLeftAligned]}>
       <ItemHeading style={styles.sectionHeading}>
         How do you want to measure progress?
       </ItemHeading>
       <View style={styles.radioButtonContainer}>
         <RadioButton
           textStyle={styles.buttonStyle}
-          onPress={() => setMeasuringProgress(MeasurementType.Boolean)}
+          onPress={setMeasuringProgress}
           checked={measuringProgress === MeasurementType.Boolean}
           label="A simple Yes or No"
           value={MeasurementType.Boolean}
         />
         <RadioButton
           textStyle={styles.buttonStyle}
-          onPress={() => setMeasuringProgress(MeasurementType.Scale)}
+          onPress={setMeasuringProgress}
           checked={measuringProgress === MeasurementType.Scale}
           label="On a scale of 1 to 5"
           value={MeasurementType.Scale}
@@ -54,10 +54,6 @@ const Measure: React.FC<{navigation: any}> = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    paddingHorizontal: 16,
     paddingTop: 32,
   },
   sectionHeading: {

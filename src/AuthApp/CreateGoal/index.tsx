@@ -6,7 +6,6 @@ import Description from './Description';
 import Measure from './Measure';
 import Checkpoints from './Checkpoints';
 import Notifications from './Notifications';
-import Complete from './Complete';
 
 export type CreateGoalStackParamList = {
   Title: undefined;
@@ -27,7 +26,6 @@ const GoalCreationFlow: React.FC<{navigation: any}> = () => {
       <Stack.Screen name="Measure" component={Measure} />
       <Stack.Screen name="Checkpoints" component={Checkpoints} />
       <Stack.Screen name="Notifications" component={Notifications} />
-      <Stack.Screen name="Complete" component={Complete} />
     </Stack.Navigator>
   );
 };

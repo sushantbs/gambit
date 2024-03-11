@@ -31,19 +31,19 @@ type Props =
 const getDayLabel = (weekday: Weekday): string => {
   switch (weekday) {
     case Weekday.Sunday:
-      return 'Sun';
+      return 'Su';
     case Weekday.Monday:
-      return 'Mon';
+      return 'M';
     case Weekday.Tuesday:
-      return 'Tue';
+      return 'T';
     case Weekday.Wednesday:
-      return 'Wed';
+      return 'W';
     case Weekday.Thursday:
-      return 'Thu';
+      return 'Th';
     case Weekday.Friday:
-      return 'Fri';
+      return 'F';
     case Weekday.Saturday:
-      return 'Sat';
+      return 'S';
   }
 };
 
@@ -106,7 +106,7 @@ export const WeekdayPicker: React.FC<Props> = ({
               ...(isSelected ? styles.selectedWeekday : undefined),
             }}
             onPress={() => handleOnPress(weekday)}>
-            <Text>{getDayLabel(weekday)}</Text>
+            <Text style={styles.labelStyle}>{getDayLabel(weekday)}</Text>
           </TouchableOpacity>
         );
       })}
@@ -124,13 +124,19 @@ const styles = StyleSheet.create({
     width: 40,
     backgroundColor: 'white',
     borderColor: 'orange',
-    borderRadius: 4,
-    margin: 4,
+    borderRadius: 20,
+    shadowColor: 'black',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.3,
+    margin: 6,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
   selectedWeekday: {
     backgroundColor: 'orange',
+  },
+  labelStyle: {
+    fontSize: 20,
   },
 });

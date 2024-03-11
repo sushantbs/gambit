@@ -36,8 +36,8 @@ export const BodyText: React.FC<TextProps> = ({children, style, ...props}) => (
 const styles = StyleSheet.create({
   title: {
     fontFamily: 'Inter',
-    fontSize: 48,
-    fontWeight: '500',
+    fontSize: 32,
+    fontWeight: '900',
   },
   subtitle: {
     fontFamily: 'Inter',
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   body: {
     fontFamily: 'Inter',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '400',
   },
   itemHeading: {
