@@ -16,6 +16,7 @@ import {GoalsProvider} from '../modules/goals/GoalsProvider';
 import {GoalsApi} from '../modules/goals/GoalsApi';
 import {UpdateCheckpoint} from './UpdateCheckpoint';
 import {CreationComplete} from './CreationComplete';
+import {OnboardingComplete} from './OnboardingComplete';
 
 const Stack = createStackNavigator();
 
@@ -39,8 +40,6 @@ const AppStack = () => {
   }, [backgroundNotification]);
 
   const initialRouteName = getInitialRouteName(onboardingState);
-  // const initialRouteName = 'CreateGoal';
-  console.log(initialRouteName);
 
   return (
     <Stack.Navigator initialRouteName={initialRouteName}>
@@ -70,11 +69,15 @@ const AppStack = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="OnboardingComplete"
+        component={OnboardingComplete}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="CreationComplete"
         component={CreationComplete}
         options={{headerShown: false}}
       />
-      {/* Add other screens as needed */}
     </Stack.Navigator>
   );
 };

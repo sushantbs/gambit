@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
-import ConfettiCannon from 'react-native-confetti-cannon';
+// import ConfettiCannon from 'react-native-confetti-cannon';
 import {theme} from '../../styles';
 import {SubtitleText, TitleText} from '../../components/Fonts';
 import {PrimaryButton} from '../../components/Buttons';
@@ -19,8 +19,9 @@ export const WelcomeScreen: React.FC<{navigation: any}> = ({navigation}) => {
         Building deliberate habits is your first step to more control in your
         life.
       </SubtitleText>
-      <ConfettiCannon ref={confettiRef} count={200} origin={{x: -10, y: 0}} />
+      {/* <ConfettiCannon ref={confettiRef} count={200} origin={{x: -10, y: 0}} /> */}
       <PrimaryButton
+        fullLength
         title="Get Started"
         onPress={() => navigation.navigate('Notifications')}
       />

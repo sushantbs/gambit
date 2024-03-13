@@ -79,11 +79,7 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
         />
       ) : (
         <>
-          <TitleText style={styles.fontStyles}>Congratulations!</TitleText>
-          <BodyText style={styles.fontStyles}>
-            You have successfully setup your habit building rhythm. You can now
-            proceed to create some habit goals.
-          </BodyText>
+          <TitleText style={styles.fontStyles}>No goals yet</TitleText>
         </>
       )}
       <View style={styles.addButtonContainer}>
@@ -117,7 +113,6 @@ const styles = StyleSheet.create({
   },
   fontStyles: {
     color: '#ffffff',
-    paddingHorizontal: 30,
     marginBottom: 8,
   },
   goalDescription: {

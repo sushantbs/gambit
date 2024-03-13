@@ -81,7 +81,7 @@ const SchedulerScreen: React.FC<SchedulerScreenProps> = ({
         }),
       );
 
-      navigation.navigate('Complete');
+      navigation.navigate('OnboardingComplete');
     }
   };
 

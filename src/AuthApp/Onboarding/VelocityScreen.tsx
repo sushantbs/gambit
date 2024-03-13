@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {PrimaryButton, RadioButton} from '../../components/Buttons'; // Import the radio button component
 import {theme} from '../../styles';
-import {BodyText, SubtitleText} from '../../components/Fonts';
+import {BodyText, TitleText} from '../../components/Fonts';
 import {useDispatch} from 'react-redux';
 import {setVelocity} from '../../store/actions/appState';
 import {checkNotifications} from 'react-native-permissions';
@@ -30,14 +30,14 @@ export const VelocityScreen: React.FC<{navigation: any}> = ({navigation}) => {
   };
 
   return (
-    <View style={{...theme.container, ...styles.container}}>
-      <SubtitleText>Set Your Pace for Habit Building</SubtitleText>
-      <BodyText>
+    <View style={[theme.container, styles.container]}>
+      <TitleText style={styles.rowItem}>Set your pace</TitleText>
+      <BodyText style={styles.rowItem}>
         Building habits takes time, and a higher pace requires more commitment.
         If you are new to habit building, we recommend starting slow. In this
         case you'd review your progress about once a month and see if you need
         to make any adjustments to your plan. For seasoned users this would be
-        about. For seasoned users this would be about once a week.
+        about once a week.
       </BodyText>
 
       <View>
@@ -45,24 +45,24 @@ export const VelocityScreen: React.FC<{navigation: any}> = ({navigation}) => {
           label="Slow (review progress at least once a month)"
           value={Velocity.Slow}
           checked={selectedVelocity === Velocity.Slow}
-          onPress={() => setSelectedVelocity(Velocity.Slow)}
+          onPress={setSelectedVelocity}
         />
         <RadioButton
           label="Medium (review progress at least twice a month)"
           value={Velocity.Medium}
           checked={selectedVelocity === Velocity.Medium}
-          onPress={() => setSelectedVelocity(Velocity.Medium)}
+          onPress={setSelectedVelocity}
         />
         <RadioButton
           label="Fast (review progress every week)"
           value={Velocity.Fast}
           checked={selectedVelocity === Velocity.Fast}
-          onPress={() => setSelectedVelocity(Velocity.Fast)}
+          onPress={setSelectedVelocity}
         />
       </View>
       <View style={styles.buttonContainer}>
         {selectedVelocity && (
-          <PrimaryButton title="Next" onPress={handleNext} />
+          <PrimaryButton fullLength title="Continue" onPress={handleNext} />
         )}
       </View>
     </View>
@@ -70,12 +70,12 @@ export const VelocityScreen: React.FC<{navigation: any}> = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 24,
-    justifyContent: 'space-evenly',
-  },
+  container: {paddingTop: 100, justifyContent: 'flex-start'},
+  rowItem: {marginBottom: 24},
   buttonContainer: {
-    height: 80,
+    position: 'absolute',
+    width: '100%',
+    bottom: 80,
   },
 });
 

@@ -6,14 +6,12 @@ import {theme} from '../styles';
 
 export const CreationComplete: React.FC<{navigation: any}> = ({navigation}) => {
   return (
-    <View style={[theme.container, theme.darkBg]}>
-      <TitleText style={styles.label}>🙌</TitleText>
+    <View style={[theme.container, theme.darkBg, styles.container]}>
       <TitleText style={styles.darkBgFont}>Goal created!</TitleText>
       <BodyText style={styles.darkBgFont}>
-        Nice work setting up your goal! Unfortunately, things will get harder
-        from here. Don't over think it. Just be mindful that it is ok to some
-        times you might miss your checkpoints. The important thing is to not
-        give up trying ❤️.
+        Nice work setting up your goal! You're already on your way. Don't over
+        think it. Just be mindful that it is ok to some times you might miss
+        your checkpoints. The important thing is to not give up trying. ❤️
       </BodyText>
       <BodyText style={styles.darkBgFont}>
         "It's not about how hard you hit. It's about how hard you can get hit
@@ -37,6 +35,10 @@ export const CreationComplete: React.FC<{navigation: any}> = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop: 100,
+    justifyContent: 'flex-start',
+  },
   label: {
     fontSize: 16,
     marginBottom: 8,
@@ -54,5 +56,6 @@ const styles = StyleSheet.create({
   },
   darkBgFont: {
     color: '#fff',
+    marginBottom: 16,
   },
 });

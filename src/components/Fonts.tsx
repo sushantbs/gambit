@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
     fontSize: 18,
     fontWeight: '400',
+    lineHeight: 24,
   },
   itemHeading: {
     fontSize: 16,
