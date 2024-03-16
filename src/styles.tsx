@@ -32,6 +32,9 @@ export const theme = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  flexWrap: {
+    flexWrap: 'wrap',
+  },
   darkBg: {
     backgroundColor: '#17141B',
     color: '#fff',

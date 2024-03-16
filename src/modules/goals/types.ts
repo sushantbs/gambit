@@ -53,7 +53,7 @@ type GoalSuggestion = {
 //   checkinTime: number;
 // };
 
-type GoalMeasurement = {
+export type GoalMeasurement = {
   id: string;
   measurementType: MeasurementType;
   timestamp: number;

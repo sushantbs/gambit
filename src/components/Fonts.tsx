@@ -1,34 +1,55 @@
 import React from 'react';
 import {Text, TextProps, StyleSheet} from 'react-native';
 
-export const TitleText: React.FC<TextProps> = ({children, style, ...props}) => (
-  <Text style={[styles.title, style]} {...props}>
-    {children}
-  </Text>
-);
-
-export const SubtitleText: React.FC<TextProps> = ({
+type AdditionalFontProps = {withDarkBg?: boolean};
+export const TitleText: React.FC<TextProps & AdditionalFontProps> = ({
   children,
   style,
+  withDarkBg,
   ...props
 }) => (
-  <Text style={[styles.subtitle, style]} {...props}>
+  <Text
+    style={[styles.title, withDarkBg ? styles.whiteText : {}, style]}
+    {...props}>
     {children}
   </Text>
 );
 
-export const ItemHeading: React.FC<TextProps> = ({
+export const SubtitleText: React.FC<TextProps & AdditionalFontProps> = ({
   children,
   style,
+  withDarkBg,
   ...props
 }) => (
-  <Text style={[styles.itemHeading, style]} {...props}>
+  <Text
+    style={[styles.subtitle, withDarkBg ? styles.whiteText : {}, style]}
+    {...props}>
     {children}
   </Text>
 );
 
-export const BodyText: React.FC<TextProps> = ({children, style, ...props}) => (
-  <Text style={[styles.body, style]} {...props}>
+export const ItemHeading: React.FC<TextProps & AdditionalFontProps> = ({
+  children,
+  style,
+  withDarkBg,
+  ...props
+}) => (
+  <Text
+    style={[styles.itemHeading, withDarkBg ? styles.whiteText : {}, style]}
+    {...props}>
+    {children}
+  </Text>
+);
+
+export const BodyText: React.FC<TextProps & AdditionalFontProps> = ({
+  children,
+  style,
+  withDarkBg,
+  ...props
+}) => (
+  <Text
+    style={[styles.body, withDarkBg ? styles.whiteText : {}, style]}
+    {...props}>
     {children}
   </Text>
 );
@@ -54,5 +75,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     fontFamily: 'Inter',
+  },
+  whiteText: {
+    color: 'white',
   },
 });
