@@ -6,12 +6,12 @@ export const saveBooleanGoalProgress = async (
   goalId: string,
   timestamp: number,
   measuredValue: MeasurementValue,
+  notificationId: string,
 ): Promise<void> => {
   const goalsApi = new GoalsApi();
   const goal = await goalsApi.getGoal(goalId);
-
   const now = new Date().getTime();
-  goalsApi.updateGoal({
+  await goalsApi.updateGoal({
     ...goal,
     measurements: [
       ...goal.measurements,
@@ -22,6 +22,7 @@ export const saveBooleanGoalProgress = async (
         updatedOn: now,
         value: measuredValue,
         measurementType: MeasurementType.Boolean,
+        notificationId,
       },
     ],
   });

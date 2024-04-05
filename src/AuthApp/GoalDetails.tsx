@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {theme} from '../styles';
 import {BodyText, SubtitleText, TitleText} from '../components/Fonts';
-// import {useGoal} from '../modules/goals/useGoal';
+import {useGoal} from '../modules/goals/useGoal';
 import {ScrollView} from 'react-native-gesture-handler';
 import {CheckpointFrequency, YesNoValue} from '../modules/goals/types';
 import {PrimaryButton, SecondaryButton} from '../components/Buttons';
-import {generateGoalItem} from '../utils/factory';
+import {DateTime} from 'luxon';
+import {NotificationContext} from '../modules/notifications/context';
 
 export const formatDate = (timestamp: number) => {
   const date = new Date(timestamp);
@@ -14,8 +15,8 @@ export const formatDate = (timestamp: number) => {
 };
 
 export const formatDateDDMM = (timestamp: number) => {
-  const date = new Date(timestamp);
-  return `${date.getDate()}/${date.getMonth()}`;
+  const date = DateTime.fromMillis(timestamp);
+  return `${date.toISODate()}`;
 };
 
 export const getCheckpointFrequency = (
@@ -81,10 +82,18 @@ const yesNoStyles = StyleSheet.create({
 
 export const GoalDetails: React.FC<{route: any; navigation: any}> = ({
   route,
+  navigation,
 }) => {
   const {goalId} = route.params;
-  // const {goal} = useGoal(goalId);
-  const goal = generateGoalItem();
+
+  const {goal} = useGoal(goalId);
+  const {notification} = useContext(NotificationContext);
+
+  useEffect(() => {
+    if (notification?.data?.type === 'update-goal') {
+      navigation.push('UpdateCheckpoint');
+    }
+  }, [notification, navigation]);
 
   if (!goal) {
     return (

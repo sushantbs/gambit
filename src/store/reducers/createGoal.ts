@@ -4,6 +4,7 @@ import {
   CreateGoalActions,
   SET_GOAL_CHECKPOINT,
   SET_GOAL_DESCRIPTION,
+  SET_GOAL_MEASUREMENT_TYPE,
   SET_GOAL_TITLE,
 } from '../actions/createGoal';
 import {
@@ -25,7 +26,9 @@ const initialState: CreateGoalState = {
   measurementType: MeasurementType.NotSet,
   checkpoint: {
     frequency: CheckpointFrequency.NotSet,
-    time: [0, 0],
+    hours: 0,
+    minutes: 0,
+    days: [],
   },
 };
 
@@ -49,6 +52,11 @@ export const createGoalReducer: Reducer<CreateGoalState, CreateGoalActions> = (
       return {
         ...state,
         checkpoint: action.checkpoint,
+      };
+    case SET_GOAL_MEASUREMENT_TYPE:
+      return {
+        ...state,
+        measurementType: action.measurementType,
       };
     case COMPLETE_CREATE_GOAL:
       return initialState;

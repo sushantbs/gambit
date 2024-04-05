@@ -1,11 +1,12 @@
 import React, {useContext, useState} from 'react';
 import {NotificationContext} from '../modules/notifications/context';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {theme} from '../styles';
 import {SubtitleText, TitleText} from '../components/Fonts';
 import {useGoal} from '../modules/goals/useGoal';
 import {PrimaryButton, RadioButton} from '../components/Buttons';
 import {YesNoValue} from '../modules/goals/types';
+import {DateTime} from 'luxon';
 
 type UpdateControlProps<T = YesNoValue> = {
   value: T | undefined;
@@ -44,12 +45,13 @@ export const UpdateCheckpoint: React.FC<{navigation: any}> = ({navigation}) => {
   const {notification} = useContext(NotificationContext);
   const [yesNoValue, setYesNoValue] = useState<YesNoValue | undefined>();
   const goalId = notification?.data?.goalId as string;
-  const notificationId = notification?.data?.id as string;
+  const timestamp = parseInt(notification?.data?.timestamp as string, 10);
+  const notificationId = notification?.id as string;
   const {goal, updateCheckpoint} = useGoal(goalId);
 
   const handleSubmitUpdate = () => {
     if (typeof yesNoValue !== 'undefined') {
-      updateCheckpoint(yesNoValue, notificationId);
+      updateCheckpoint(yesNoValue, timestamp, notificationId);
       navigation.pop();
     }
   };
@@ -67,16 +69,23 @@ export const UpdateCheckpoint: React.FC<{navigation: any}> = ({navigation}) => {
   }
 
   return (
-    <View style={theme.container}>
-      <View>
-        <TitleText>{goal.title}</TitleText>
-        <SubtitleText>Update your progress</SubtitleText>
-        <YesNoUpdateControl value={yesNoValue} onChange={setYesNoValue} />
-
-        <View style={theme.flexRow}>
-          <PrimaryButton title="Submit" onPress={handleSubmitUpdate} />
-        </View>
+    <View style={[theme.container, theme.topAligned]}>
+      <TitleText>{goal.title}</TitleText>
+      <SubtitleText>{`Update your progress for ${DateTime.fromMillis(
+        timestamp,
+      ).toFormat('dd/MM')}`}</SubtitleText>
+      <YesNoUpdateControl value={yesNoValue} onChange={setYesNoValue} />
+      <View style={styles.buttonContainer}>
+        <PrimaryButton fullLength title="Submit" onPress={handleSubmitUpdate} />
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 80,
+    width: '100%',
+  },
+});

@@ -1,10 +1,14 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import notifee, {EventType, Notification} from '@notifee/react-native';
 
 export const useInitialNotification = () => {
   const [initialNotification, setInitialNotification] = useState<
     Notification | undefined
   >();
+
+  const clearInitialNotification = useCallback(() => {
+    setInitialNotification(undefined);
+  }, []);
 
   useEffect(() => {
     if (initialNotification) {
@@ -38,5 +42,5 @@ export const useInitialNotification = () => {
     });
   }, [initialNotification]);
 
-  return initialNotification;
+  return {initialNotification, clearInitialNotification};
 };

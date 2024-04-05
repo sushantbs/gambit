@@ -1,3 +1,4 @@
+import notifee from '@notifee/react-native';
 import {GoalsApi} from './GoalsApi';
 
 export async function clearNotification(
@@ -13,4 +14,7 @@ export async function clearNotification(
       ({id}) => id !== notificationId,
     ),
   });
+
+  // Remove the notification
+  await notifee.cancelNotification(notificationId);
 }

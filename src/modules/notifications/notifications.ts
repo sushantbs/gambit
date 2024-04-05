@@ -15,10 +15,13 @@ import {
 import {clearNotification} from '../goals/clearNotification';
 import {Weekday, getWeekdayDateValue} from '../../components/WeekdayPicker';
 import {Monthday, getMonthdayDateValue} from '../../components/MonthdayPicker';
+import {DateTime} from 'luxon';
+import {replenishNotifications} from '../goals/replenishNotifications';
 
 export type BackgroundNotification = Notification;
 
 let channelId: string;
+const testNotifications: boolean = false;
 
 export async function createNotificationCategories() {
   notifee.setNotificationCategories([
@@ -85,7 +88,6 @@ export async function createNotificationCategories() {
 }
 
 export function addForegroundNotificationListener() {
-  console.log('Adding foreground notification listener');
   notifee.onForegroundEvent(async ({type, detail}) => {
     switch (type) {
       case EventType.DISMISSED:
@@ -100,7 +102,6 @@ export function addForegroundNotificationListener() {
 
 export function addBackgroundNotificationListener() {
   notifee.onBackgroundEvent(async ({type, detail}) => {
-    console.log('Background listener invoked!');
     const {notification, pressAction} = detail;
 
     if (!notification || !notification.id) {
@@ -118,18 +119,19 @@ export function addBackgroundNotificationListener() {
       type === EventType.ACTION_PRESS &&
       pressAction?.id === 'complete-checkpoint'
     ) {
-      saveBooleanGoalProgress(
+      await saveBooleanGoalProgress(
         notification.data?.goalId as string,
         parseInt(notification.data?.timestamp as string, 10),
         YesNoValue.Yes,
+        notification.id,
       );
 
-      clearNotification(notification.id, notification.data?.goalId as string);
+      await clearNotification(
+        notification.id,
+        notification.data?.goalId as string,
+      );
 
-      // Remove the notification
-      if (notification?.id) {
-        await notifee.cancelNotification(notification.id);
-      }
+      await replenishNotifications(notification.data?.goalId as string);
     }
 
     // Check if the user pressed the "Mark as read" action
@@ -137,18 +139,19 @@ export function addBackgroundNotificationListener() {
       type === EventType.ACTION_PRESS &&
       pressAction?.id === 'skip-checkpoint'
     ) {
-      saveBooleanGoalProgress(
+      await saveBooleanGoalProgress(
         notification.data?.goalId as string,
         parseInt(notification.data?.timestamp as string, 10),
         YesNoValue.No,
+        notification.id,
       );
 
-      clearNotification(notification.id, notification.data?.goalId as string);
+      await clearNotification(
+        notification.id,
+        notification.data?.goalId as string,
+      );
 
-      // Remove the notification
-      if (notification?.id) {
-        await notifee.cancelNotification(notification.id);
-      }
+      await replenishNotifications(notification.data?.goalId as string);
     }
   });
 }
@@ -172,7 +175,7 @@ function getMonthLength(date: Date): number {
   return 29;
 }
 
-function getNextCheckpointDateTime(
+export function getNextCheckpointDateTime(
   fromDate: Date,
   checkpoint: Checkpoint,
 ): Date {
@@ -183,6 +186,12 @@ function getNextCheckpointDateTime(
   const fromDayOfMonth = fromDate.getDate();
   const fromDayOfWeek = fromDate.getDay();
   const fromDateTimestamp = fromDate.getTime();
+
+  if (testNotifications) {
+    const checkpointDate = new Date(fromDateTimestamp);
+    checkpointDate.setSeconds(checkpointDate.getSeconds() + 30);
+    return checkpointDate;
+  }
 
   if (frequency === CheckpointFrequency.Weekly) {
     if (!days || !days.length) {
@@ -290,6 +299,9 @@ export async function createNotificationsForNewGoal(
       timestamp,
     };
 
+    console.log(
+      `Add notification for ${DateTime.fromMillis(timestamp).toISOTime()}`,
+    );
     const notificationId = await notifee.createTriggerNotification(
       {
         title: goalTitle,
@@ -316,11 +328,9 @@ export async function createNotificationsForNewGoal(
 /**
  * https://notifee.app/react-native/reference/requestpermission
  */
-export const requestNotificationPermission = async () =>
-  notifee.requestPermission();
+export const requestNotificationPermission = () => notifee.requestPermission();
 
 export function setupNotifeecations() {
   createNotificationCategories();
   addBackgroundNotificationListener();
-  addForegroundNotificationListener();
 }

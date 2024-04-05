@@ -101,7 +101,8 @@ const AuthApp: React.FC = () => {
 
   const goalsApi = useMemo(() => new GoalsApi(), []);
 
-  const initialNotification = useInitialNotification();
+  const {initialNotification, clearInitialNotification} =
+    useInitialNotification();
 
   if (!store) {
     return null;
@@ -109,7 +110,9 @@ const AuthApp: React.FC = () => {
 
   return (
     <Provider store={store}>
-      <NotificationProvider notification={initialNotification}>
+      <NotificationProvider
+        notification={initialNotification}
+        clearNotification={clearInitialNotification}>
         <GoalsProvider instance={goalsApi}>
           <AppStack />
         </GoalsProvider>

@@ -1,4 +1,4 @@
-import {CheckpointFrequency, MeasurementType} from '../../modules/goals/types';
+import {Checkpoint, MeasurementType} from '../../modules/goals/types';
 
 export const SET_GOAL_TITLE = 'SET_GOAL_TITLE';
 export const SET_GOAL_DESCRIPTION = 'SET_GOAL_DESCRIPTION';
@@ -23,10 +23,7 @@ type SetGoalMeasurementTypeAction = {
 
 type SetGoalCheckpointAction = {
   type: typeof SET_GOAL_CHECKPOINT;
-  checkpoint: {
-    frequency: CheckpointFrequency;
-    time: [number, number];
-  };
+  checkpoint: Checkpoint;
 };
 
 type CompleteGoalCreationAction = {
@@ -53,14 +50,10 @@ export const setGoalMeasurementType = (
 });
 
 export const setGoalCheckpoint = (
-  frequency: CheckpointFrequency,
-  time: [number, number],
+  checkpoint: Checkpoint,
 ): SetGoalCheckpointAction => ({
   type: SET_GOAL_CHECKPOINT,
-  checkpoint: {
-    frequency,
-    time,
-  },
+  checkpoint,
 });
 
 export const completeGoalCreation = (): CompleteGoalCreationAction => ({
@@ -71,4 +64,5 @@ export type CreateGoalActions =
   | SetGoalTitleAction
   | SetGoalDescriptionAction
   | SetGoalCheckpointAction
+  | SetGoalMeasurementTypeAction
   | CompleteGoalCreationAction;

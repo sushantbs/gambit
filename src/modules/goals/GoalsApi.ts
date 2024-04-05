@@ -47,6 +47,7 @@ export class GoalsApi {
     this._goals.set(updatedGoal.id, updatedGoal);
     await setInStorage('goals', Array.from(this._goals.entries()));
     this.emitEvent('goals', this._goals);
+    this.emitEvent(`goal:${updatedGoal.id}`, updatedGoal);
   }
 
   public subscribe(

@@ -1,12 +1,10 @@
 import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {WelcomeScreen} from './WelcomeScreen';
-import {VelocityScreen} from './VelocityScreen';
 import {NotificationsScreen} from './NotificationsScreen';
 import {OnboardingState} from '../../store/reducers/appState';
 import {RootState} from '../../store';
 import {useSelector} from 'react-redux';
-import SchedulerScreen from './SchedulerScreen';
 
 const Stack = createStackNavigator();
 
@@ -24,8 +22,6 @@ export const OnboardingApp: React.FC<{navigation: any}> = ({navigation}) => {
     <Stack.Navigator initialRouteName="Welcome">
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
-      <Stack.Screen name="Velocity" component={VelocityScreen} />
-      <Stack.Screen name="Scheduler" component={SchedulerScreen} />
     </Stack.Navigator>
   );
 };

@@ -3,17 +3,18 @@ import {Notification} from '@notifee/react-native';
 
 type NotificationContextType = {
   notification: Notification | undefined;
+  clearNotification: () => void;
 };
 
 export const NotificationContext = React.createContext<NotificationContextType>(
-  {notification: undefined},
+  {notification: undefined, clearNotification: () => {}},
 );
 
 export const NotificationProvider: React.FC<
   PropsWithChildren<NotificationContextType>
-> = ({notification, children}) => {
+> = ({clearNotification, notification, children}) => {
   return (
-    <NotificationContext.Provider value={{notification}}>
+    <NotificationContext.Provider value={{notification, clearNotification}}>
       {children}
     </NotificationContext.Provider>
   );

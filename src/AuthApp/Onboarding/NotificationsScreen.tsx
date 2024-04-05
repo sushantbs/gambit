@@ -13,12 +13,12 @@ export const NotificationsScreen: React.FC<{navigation: any}> = ({
   const handleEnableNotifications = async () => {
     const result = await requestNotificationPermission();
     if (result.authorizationStatus === AuthorizationStatus.AUTHORIZED) {
-      navigation.navigate('Velocity');
+      navigation.navigate('OnboardingComplete');
     }
   };
 
   const handleDisableNotifications = () => {
-    navigation.navigate('Velocity');
+    navigation.navigate('OnboardingComplete');
   };
 
   return (
