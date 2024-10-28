@@ -1,5 +1,4 @@
-import {Monthday} from '../../components/MonthdayPicker';
-import {Weekday} from '../../components/WeekdayPicker';
+import {Monthday, Weekday} from '../dateTime/types';
 
 export type ScheduledNotification = {
   id: string;

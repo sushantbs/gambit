@@ -1,18 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-
-// The real value of the enum makes it easy to do comparisons when working
-// with Date instances.
-export enum Weekday {
-  Monday = 1,
-  Tuesday = 2,
-  Wednesday = 3,
-  Thursday = 4,
-  Friday = 5,
-  Saturday = 6,
-  Sunday = 0,
-}
+import {Weekday} from '../modules/dateTime/types';
+import {getDayLabel} from '../modules/dateTime/getDayLabel';
 
 type Props =
   | {
@@ -27,44 +17,6 @@ type Props =
       multiselect?: true;
       onChange: (value: any) => void;
     };
-
-const getDayLabel = (weekday: Weekday): string => {
-  switch (weekday) {
-    case Weekday.Sunday:
-      return 'Su';
-    case Weekday.Monday:
-      return 'M';
-    case Weekday.Tuesday:
-      return 'T';
-    case Weekday.Wednesday:
-      return 'W';
-    case Weekday.Thursday:
-      return 'Th';
-    case Weekday.Friday:
-      return 'F';
-    case Weekday.Saturday:
-      return 'S';
-  }
-};
-
-export const getWeekdayDateValue = (weekday: Weekday): number => {
-  switch (weekday) {
-    case Weekday.Sunday:
-      return 0;
-    case Weekday.Monday:
-      return 1;
-    case Weekday.Tuesday:
-      return 2;
-    case Weekday.Wednesday:
-      return 3;
-    case Weekday.Thursday:
-      return 4;
-    case Weekday.Friday:
-      return 5;
-    case Weekday.Saturday:
-      return 6;
-  }
-};
 
 export const WeekdayPicker: React.FC<Props> = ({
   value,

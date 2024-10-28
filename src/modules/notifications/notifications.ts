@@ -6,22 +6,15 @@ import notifee, {
 } from '@notifee/react-native';
 import {getFromStorage, setInStorage} from '../asyncStorage';
 import {saveBooleanGoalProgress} from '../goals/saveGoalProgress';
-import {
-  Checkpoint,
-  CheckpointFrequency,
-  ScheduledNotification,
-  YesNoValue,
-} from '../goals/types';
+import {Checkpoint, ScheduledNotification, YesNoValue} from '../goals/types';
 import {clearNotification} from '../goals/clearNotification';
-import {Weekday, getWeekdayDateValue} from '../../components/WeekdayPicker';
-import {Monthday, getMonthdayDateValue} from '../../components/MonthdayPicker';
 import {DateTime} from 'luxon';
 import {replenishNotifications} from '../goals/replenishNotifications';
+import {getNextCheckpointDateTime} from './getNextCheckpointDateTime';
 
 export type BackgroundNotification = Notification;
 
 let channelId: string;
-const testNotifications: boolean = false;
 
 export async function createNotificationCategories() {
   notifee.setNotificationCategories([
@@ -154,125 +147,6 @@ export function addBackgroundNotificationListener() {
       await replenishNotifications(notification.data?.goalId as string);
     }
   });
-}
-
-const LONG_MONTHS = [0, 2, 4, 6, 7, 9, 11];
-const SHORT_MONTHS = [3, 5, 8, 10];
-function getMonthLength(date: Date): number {
-  const month = date.getMonth();
-  if (LONG_MONTHS.includes(month)) {
-    return 31;
-  }
-
-  if (SHORT_MONTHS.includes(month)) {
-    return 30;
-  }
-
-  if (date.getFullYear() % 4) {
-    return 28;
-  }
-
-  return 29;
-}
-
-export function getNextCheckpointDateTime(
-  fromDate: Date,
-  checkpoint: Checkpoint,
-): Date {
-  const {hours, minutes, days, frequency} = checkpoint;
-
-  const fromHour = fromDate.getHours();
-  const fromMinutes = fromDate.getMinutes();
-  const fromDayOfMonth = fromDate.getDate();
-  const fromDayOfWeek = fromDate.getDay();
-  const fromDateTimestamp = fromDate.getTime();
-
-  if (testNotifications) {
-    const checkpointDate = new Date(fromDateTimestamp);
-    checkpointDate.setSeconds(checkpointDate.getSeconds() + 30);
-    return checkpointDate;
-  }
-
-  if (frequency === CheckpointFrequency.Weekly) {
-    if (!days || !days.length) {
-      throw new Error('No days of the week found!');
-    }
-
-    const sortedDateDayTimestamps = days
-      .map(a => {
-        const checkpointDate = new Date(fromDateTimestamp);
-        const checkpointDayOfWeek = getWeekdayDateValue(a as Weekday);
-
-        checkpointDate.setDate(
-          fromDayOfMonth + (checkpointDayOfWeek - fromDayOfWeek),
-        );
-        checkpointDate.setHours(hours);
-        checkpointDate.setMinutes(minutes);
-
-        return checkpointDate.getTime();
-      })
-      .sort((a, b) => a - b);
-
-    const firstCheckpointOfNextWeek =
-      getWeekdayDateValue(days[0] as Weekday) + 7;
-    const checkpointDate = new Date(fromDateTimestamp);
-
-    checkpointDate.setDate(
-      fromDayOfMonth + (firstCheckpointOfNextWeek - fromDayOfWeek),
-    );
-    checkpointDate.setHours(hours);
-    checkpointDate.setMinutes(minutes);
-
-    sortedDateDayTimestamps.push(checkpointDate.getTime());
-
-    const nextTimestamp =
-      sortedDateDayTimestamps.find(
-        checkpointTimestamp => checkpointTimestamp > fromDateTimestamp,
-      ) ?? 0;
-
-    return new Date(nextTimestamp);
-  } else if (frequency === CheckpointFrequency.Monthly) {
-    if (!days || !days.length) {
-      throw new Error('No days of the month found!');
-    }
-
-    const sortedDateDayTimestamps = days
-      .map(a => {
-        const checkpointDate = new Date(fromDateTimestamp);
-        const checkpointDayOfMonth = getMonthdayDateValue(a as Monthday);
-
-        checkpointDate.setDate(checkpointDayOfMonth);
-        checkpointDate.setHours(hours);
-        checkpointDate.setMinutes(minutes);
-
-        return checkpointDate.getTime();
-      })
-      .sort((a, b) => a - b);
-
-    const firstCheckpointOfNextMonth =
-      getMonthdayDateValue(days[0] as Monthday) + getMonthLength(fromDate);
-    const checkpointDate = new Date(fromDateTimestamp);
-
-    checkpointDate.setDate(firstCheckpointOfNextMonth);
-    checkpointDate.setHours(hours);
-    checkpointDate.setMinutes(minutes);
-
-    sortedDateDayTimestamps.push(checkpointDate.getTime());
-
-    const nextTimestamp =
-      sortedDateDayTimestamps.find(
-        checkpointTimestamp => checkpointTimestamp > fromDateTimestamp,
-      ) ?? 0;
-
-    return new Date(nextTimestamp);
-  }
-
-  // checkpoint frequency -> daily
-  const checkpointDate = new Date(fromDateTimestamp);
-  if (fromHour > hours || (fromHour === hours && fromMinutes >= minutes)) {
-    checkpointDate.setDate(fromDayOfMonth + 1);
-  }
-  return checkpointDate;
 }
 
 export async function createNotificationsForNewGoal(
