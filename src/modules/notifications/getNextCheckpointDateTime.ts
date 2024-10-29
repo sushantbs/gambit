@@ -100,6 +100,9 @@ export function getNextCheckpointDateTime(
 
   // checkpoint frequency -> daily
   const checkpointDate = new Date(fromDateTimestamp);
+  checkpointDate.setHours(hours);
+  checkpointDate.setMinutes(minutes);
+
   if (fromHour > hours || (fromHour === hours && fromMinutes >= minutes)) {
     checkpointDate.setDate(fromDayOfMonth + 1);
     checkpointDate.setHours(hours);
