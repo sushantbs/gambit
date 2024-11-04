@@ -2,7 +2,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import CreateGoal from './CreateGoal';
-import GoalList from './GoalList';
+// import GoalList from './GoalList';
 import GoalDetails from './GoalDetails';
 import Onboarding from './Onboarding';
 import {Provider, useSelector} from 'react-redux';
@@ -17,6 +17,7 @@ import {GoalsApi} from '../modules/goals/GoalsApi';
 import {UpdateCheckpoint} from './UpdateCheckpoint';
 import {CreationComplete} from './CreationComplete';
 import {OnboardingComplete} from './OnboardingComplete';
+import {GoalListWithDevOptions} from './GoalListWithDevOptions';
 
 const Stack = createStackNavigator();
 
@@ -50,13 +51,13 @@ const AppStack = () => {
       />
       <Stack.Screen
         name="GoalList"
-        component={GoalList}
+        component={GoalListWithDevOptions}
         options={{headerShown: false}}
       />
       <Stack.Screen
         name="GoalDetails"
         component={GoalDetails}
-        options={{headerShown: false}}
+        options={{headerShown: true}}
       />
       <Stack.Screen
         name="CreateGoal"

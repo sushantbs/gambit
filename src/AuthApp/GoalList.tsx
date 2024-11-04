@@ -1,11 +1,13 @@
 // GoalList.tsx
-import React, {useContext, useEffect} from 'react';
-import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
+import React, {useCallback, useContext, useEffect} from 'react';
+import {View, FlatList, StyleSheet} from 'react-native';
 import {useGoalList} from '../modules/goals/useGoalList';
-import {BodyText, SubtitleText, TitleText} from '../components/Fonts';
+import {TitleText} from '../components/Fonts';
 import {theme} from '../styles';
 import {NotificationContext} from '../modules/notifications/context';
 import {PrimaryButton} from '../components/Buttons';
+import {GoalListItem} from '../components/GoalListItem';
+import {Goal} from '../modules/goals/types';
 
 interface GoalListProps {
   navigation: any; // You can use the actual navigation type
@@ -16,6 +18,12 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
   const goalArray = goals ? goals.map(([_id, goal]) => goal) : [];
 
   const {notification} = useContext(NotificationContext);
+  const onItemSelect = useCallback(
+    (goal: Goal) => {
+      navigation.navigate('GoalDetail', {goalId: goal.id});
+    },
+    [navigation],
+  );
   useEffect(() => {
     if (notification?.data?.type === 'update-goal') {
       navigation.push('UpdateCheckpoint');
@@ -29,53 +37,9 @@ const GoalList: React.FC<GoalListProps> = ({navigation}) => {
           style={styles.listContainer}
           data={goalArray}
           keyExtractor={item => item.id}
-          renderItem={({item}) => {
-            const {timestamp} = item.scheduledNotifications[0];
-
-            const nowDate = new Date();
-            const checkpointDate = new Date(timestamp);
-
-            if (checkpointDate < nowDate) {
-              checkpointDate.setDate(checkpointDate.getDate() + 1);
-            }
-
-            const diff = checkpointDate.getTime() - nowDate.getTime();
-            const diffTime = new Date(diff);
-            const hours = diffTime.getHours();
-            const minutes = diffTime.getMinutes();
-
-            return (
-              <TouchableOpacity
-                style={styles.goalItem}
-                onPress={() => {
-                  navigation.navigate('GoalDetails', {goalId: item.id});
-                }}>
-                <SubtitleText style={styles.goalTitle}>
-                  {item.title}
-                </SubtitleText>
-                <BodyText style={styles.goalDescription}>
-                  {item.description}
-                </BodyText>
-                <View style={styles.goalInformation}>
-                  <View style={styles.infoItem}>
-                    <Text style={styles.infoLabel}>Score: </Text>
-                    <Text style={styles.infoValue}>{item.healthScore}</Text>
-                  </View>
-                  <View style={styles.infoItem}>
-                    <Text style={styles.infoLabel}>Next checkpoint in: </Text>
-                    <Text
-                      style={styles.infoValue}>{`${hours}:${minutes}`}</Text>
-                  </View>
-                  {item.suggestions.length ? (
-                    <Text
-                      style={
-                        styles.suggestions
-                      }>{`Suggestions: ${item.suggestions.join(', ')}`}</Text>
-                  ) : null}
-                </View>
-              </TouchableOpacity>
-            );
-          }}
+          renderItem={({item}) => (
+            <GoalListItem goal={item} onSelect={onItemSelect} />
+          )}
         />
       ) : (
         <>
