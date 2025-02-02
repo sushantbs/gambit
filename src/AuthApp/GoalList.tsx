@@ -13,9 +13,14 @@ interface GoalListProps {
   navigation: any; // You can use the actual navigation type
 }
 
+const isValidGoal = (goal: Goal) =>
+  !!goal.scheduledNotifications && goal.scheduledNotifications.length;
+
 const GoalList: React.FC<GoalListProps> = ({navigation}) => {
   const goals = useGoalList();
-  const goalArray = goals ? goals.map(([_id, goal]) => goal) : [];
+  const goalArray = goals
+    ? goals.map(([_id, goal]) => goal).filter(isValidGoal)
+    : [];
 
   const {notification} = useContext(NotificationContext);
   const onItemSelect = useCallback(

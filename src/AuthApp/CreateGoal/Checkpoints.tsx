@@ -9,10 +9,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {GoalsContext} from '../../modules/goals/GoalsContext';
 import {RootState} from '../../store';
 import uuid from 'react-native-uuid';
-import {createNotificationsForNewGoal} from '../../modules/notifications/notifications';
+import {createNotificationsForGoal} from '../../modules/notifications/notifications';
 import {CheckpointFrequency} from '../../modules/goals/types';
-import {Weekday, WeekdayPicker} from '../../components/WeekdayPicker';
-import {Monthday, MonthdayPicker} from '../../components/MonthdayPicker';
+import {WeekdayPicker} from '../../components/WeekdayPicker';
+import {MonthdayPicker} from '../../components/MonthdayPicker';
+import {Monthday, Weekday} from '../../modules/dateTime/types';
 
 const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
   const [checkpointInterval, setCheckpointInterval] =
@@ -55,19 +56,13 @@ const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
       minutes: selectedTime.getMinutes(),
     };
 
-    const scheduledNotifications = await createNotificationsForNewGoal(
-      checkpointInfo,
-      id,
-      createGoal.title,
-    );
-
     await goalsApi.createGoal({
       id,
       title: createGoal.title,
       description: createGoal.description,
       createdOn: createdTime,
       updatedOn: createdTime,
-      scheduledNotifications,
+      scheduledNotifications: [],
       measurements: [],
       checkinStructure: [
         [
@@ -81,6 +76,8 @@ const Checkpoints: React.FC<{navigation: any}> = ({navigation}) => {
       healthScore: 0,
       suggestions: [],
     });
+
+    await createNotificationsForGoal(checkpointInfo, id);
 
     dispatch(completeGoalCreation());
     navigation.navigate('CreationComplete');

@@ -65,6 +65,7 @@ export type GoalMeasurement = {
 };
 
 export type Goal = {
+  isDummy?: boolean;
   id: string;
   title: string;
   description: string;

@@ -4,8 +4,6 @@ import {Checkpoint, CheckpointFrequency} from '../goals/types';
 import {getMonthdayDateValue} from '../dateTime/getMonthdayDateValue';
 import {getMonthLength} from '../dateTime/getMonthLength';
 
-const testNotifications: boolean = false;
-
 export function getNextCheckpointDateTime(
   fromDate: Date,
   checkpoint: Checkpoint,
@@ -17,12 +15,6 @@ export function getNextCheckpointDateTime(
   const fromDayOfMonth = fromDate.getDate();
   const fromDayOfWeek = fromDate.getDay();
   const fromDateTimestamp = fromDate.getTime();
-
-  if (testNotifications) {
-    const checkpointDate = new Date(fromDateTimestamp);
-    checkpointDate.setSeconds(checkpointDate.getSeconds() + 30);
-    return checkpointDate;
-  }
 
   if (frequency === CheckpointFrequency.Weekly) {
     if (!days || !days.length) {

@@ -1,11 +1,11 @@
 import notifee from '@notifee/react-native';
-import {
-  createNotificationCategories,
-  addForegroundNotificationListener,
-  addBackgroundNotificationListener,
-  createNotificationsForNewGoal,
-} from './notifications';
+import {createNotificationsForNewGoal} from './notifications';
 import {Checkpoint, CheckpointFrequency} from '../goals/types';
+import {createNotificationCategories} from './createNotificationCategories';
+import {
+  addBackgroundNotificationListener,
+  addForegroundNotificationListener,
+} from './addNotificationListeners';
 
 describe('notifications.ts', () => {
   beforeEach(() => {
