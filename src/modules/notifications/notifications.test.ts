@@ -1,11 +1,24 @@
 import notifee from '@notifee/react-native';
-import {createNotificationsForNewGoal} from './notifications';
+import {createNotificationsForGoal} from './notifications';
 import {Checkpoint, CheckpointFrequency} from '../goals/types';
 import {createNotificationCategories} from './createNotificationCategories';
 import {
   addBackgroundNotificationListener,
   addForegroundNotificationListener,
 } from './addNotificationListeners';
+
+jest.mock('../goals/GoalsApi', () => {
+  class GoalsApiMock {
+    getGoal = jest.fn().mockReturnValue({
+      id: 'goal-123',
+      title: 'Test goal',
+    });
+  }
+
+  return {
+    GoalsApi: GoalsApiMock,
+  };
+});
 
 describe('notifications.ts', () => {
   beforeEach(() => {
@@ -77,12 +90,10 @@ describe('notifications.ts', () => {
         frequency: CheckpointFrequency.Weekly,
       };
       const goalId = 'goal-123';
-      const goalTitle = 'Test Goal';
 
-      const notifications = await createNotificationsForNewGoal(
+      const notifications = await createNotificationsForGoal(
         checkpoint,
         goalId,
-        goalTitle,
       );
 
       expect(notifee.requestPermission).toHaveBeenCalled();

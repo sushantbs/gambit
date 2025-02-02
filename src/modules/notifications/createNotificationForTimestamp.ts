@@ -1,5 +1,4 @@
 import notifee, {TimestampTrigger, TriggerType} from '@notifee/react-native';
-import {DateTime} from 'luxon';
 import {getChannelId} from './notificationChannel';
 
 export async function createNotificationForTimestamp(
@@ -7,10 +6,6 @@ export async function createNotificationForTimestamp(
   goalTitle: string,
   timestamp: number,
 ) {
-  console.log(
-    `Add notification for ${DateTime.fromMillis(timestamp).toLocaleString()}`,
-  );
-
   const channelId = getChannelId();
 
   const trigger: TimestampTrigger = {
